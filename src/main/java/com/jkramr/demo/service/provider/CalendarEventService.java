@@ -46,10 +46,6 @@ public class CalendarEventService {
         endTimeIndex.put(endTime, calendarEvent.getId());
     }
 
-    public Collection<CalendarEvent> getAllEvents() {
-        return events.values();
-    }
-
     public void checkTimes(TreeSet<LocalDateTime> times) {
 
         System.out.println();

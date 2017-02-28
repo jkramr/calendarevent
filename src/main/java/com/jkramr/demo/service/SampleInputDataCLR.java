@@ -46,7 +46,6 @@ class SampleInputDataCLR implements CommandLineRunner {
                     calendarEventService.registerEvent(calendarEvent);
                 });
 
-        // publish sample data slice
         calendarEventService.checkTimes(times);
     }
 

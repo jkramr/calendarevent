@@ -13,3 +13,7 @@ Simple one-button configurable Spring Boot Application, uses Java only for proce
 `-Dserver.port` - port for this application
 
 `-Dpath` - path to file with input data
+
+##To use custom file run: 
+
+- `./gradlew bootRun -Dpath=<path-to-file>`
