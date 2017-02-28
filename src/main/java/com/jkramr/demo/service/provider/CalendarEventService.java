@@ -51,23 +51,34 @@ public class CalendarEventService {
         System.out.println();
         System.out.println("Checking: ");
         System.out.println();
-        times.forEach(this::checkTime);
+
+        times.stream()
+                .map(this::checkTime)
+                .forEach(System.out::println);
+
         System.out.println();
     }
 
-    private void checkTime(LocalDateTime time) {
-        Integer closestEventByStart = startTimeIndex.floorEntry(time).getValue();
-        Integer closestEventByEnd = endTimeIndex.ceilingEntry(time).getValue();
+    private String checkTime(LocalDateTime time) {
+        Map.Entry<LocalDateTime, Integer> floorEntry = startTimeIndex.floorEntry(time);
+        Map.Entry<LocalDateTime, Integer> ceilingEntry = endTimeIndex.ceilingEntry(time);
 
-        CalendarEvent floor = events.get(closestEventByStart);
-        CalendarEvent ceiling = events.get(closestEventByEnd);
+        if (floorEntry != null) {
+            CalendarEvent floor = events.get(floorEntry.getValue());
 
-        if (floor.getEndTime().isAfter(time)) {
-            System.out.println(time + "," + floor.getTitle());
-        } else if (ceiling.getStartTime().isBefore(time)) {
-            System.out.println(time + "," + ceiling.getTitle());
-        } else {
-            System.out.println(time + ",Nothing");
+            if (floor.getEndTime().isAfter(time)) {
+                return time + "," + floor.getTitle();
+            }
         }
+
+        if (ceilingEntry != null) {
+            CalendarEvent ceiling = events.get(ceilingEntry.getValue());
+
+            if (ceiling.getStartTime().isBefore(time)) {
+                return time + "," + ceiling.getTitle();
+            }
+        }
+
+        return time + ",Nothing";
     }
 }
